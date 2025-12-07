@@ -1,0 +1,147 @@
+{
+  "name": "git-profiles",
+  "displayName": "Git Profiles Manager",
+  "description": "Multi-cuenta GitHub con tokens para Git",
+  "version": "0.0.1",
+  "publisher": "remiaguilar",
+  "author": {
+    "name": "Remi Aguilar",
+    "url": "https://remiaguilar.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remiaguilar/vs-notes"
+  },
+  "bugs": {
+    "url": "https://github.com/remiaguilar/vs-notes/issues"
+  },
+  "homepage": "https://github.com/remiaguilar/vs-notes#readme",
+  "keywords": [
+    "git",
+    "github",
+    "profiles",
+    "multi-account",
+    "token",
+    "open-source"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitProfiles.refresh",
+        "title": "Refrescar Perfiles",
+        "category": "Git Profiles",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "gitProfiles.selectDirectory",
+        "title": "Seleccionar Directorio de Perfiles",
+        "category": "Git Profiles",
+        "icon": "$(folder)"
+      },
+      {
+        "command": "gitProfiles.createProfile",
+        "title": "Crear Perfil",
+        "category": "Git Profiles",
+        "icon": "$(add)"
+      },
+      {
+        "command": "gitProfiles.editProfile",
+        "title": "Editar Perfil",
+        "category": "Git Profiles",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "gitProfiles.deleteProfile",
+        "title": "Eliminar Perfil",
+        "category": "Git Profiles",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "gitProfiles.activateProfile",
+        "title": "Activar Perfil",
+        "category": "Git Profiles",
+        "icon": "$(check)"
+      },
+      {
+        "command": "gitProfiles.configureRepo",
+        "title": "Configurar Repositorio Git",
+        "category": "Git Profiles"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "git-profiles",
+          "title": "Git Profiles",
+          "icon": "$(account)"
+        }
+      ]
+    },
+    "views": {
+      "git-profiles": [
+        {
+          "id": "gitProfilesView",
+          "name": "Perfiles"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "gitProfiles.refresh",
+          "when": "view == gitProfilesView",
+          "group": "navigation@1"
+        },
+        {
+          "command": "gitProfiles.createProfile",
+          "when": "view == gitProfilesView",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "gitProfiles.activateProfile",
+          "when": "view == gitProfilesView && viewItem == profile-inactive"
+        },
+        {
+          "command": "gitProfiles.editProfile",
+          "when": "view == gitProfilesView && viewItem =~ /profile/"
+        },
+        {
+          "command": "gitProfiles.deleteProfile",
+          "when": "view == gitProfilesView && viewItem =~ /profile/"
+        }
+      ],
+      "scm/title": [
+        {
+          "command": "gitProfiles.configureRepo",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "build": "npm run compile && (code --uninstall-extension remiaguilar.git-profiles || true) && vsce package --allow-missing-repository --allow-star-activation --no-yarn && code --install-extension git-profiles-0.0.1.vsix --force"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.x",
+    "@typescript-eslint/parser": "^6.x",
+    "eslint": "^8.x",
+    "typescript": "^5.3.0"
+  }
+}
